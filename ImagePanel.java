@@ -1,6 +1,5 @@
 import javax.swing.JPanel;
 import java.awt.image.*;
-import javax.imageio.*;
 import java.util.ArrayList;
 import java.awt.event.*;
 import java.awt.Color;
@@ -10,8 +9,8 @@ import javax.swing.ImageIcon;
 import java.awt.Graphics;
 
 public class ImagePanel extends JPanel implements ComponentListener {
-	private static final int DEFAULT_WIDTH = 800;
-	private static final int DEFAULT_HEIGHT = 600;
+	private static final int DEFAULT_WIDTH = 640;
+	private static final int DEFAULT_HEIGHT = 480;
 	private static final int WHITE = 0xFFFFFFFF;
 	BufferedImage image;
 	ArrayList<Integer> fullData;
@@ -25,6 +24,10 @@ public class ImagePanel extends JPanel implements ComponentListener {
 	public void setPixelData (ArrayList<Integer> pixelArray) {
 		fullData = pixelArray;
 		updateImage();
+	}
+	
+	public BufferedImage getImage() {
+		return image;
 	}
 	
 	private void updateImage () {
