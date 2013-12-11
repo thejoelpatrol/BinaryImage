@@ -9,8 +9,8 @@ import java.awt.event.KeyEvent;
 public class BinaryImageDisplay {	
 	private static final int DEFAULT_WIDTH = 640;
 	private static final int DEFAULT_HEIGHT = 480;
+	private static final String IMAGE_FORMAT = "PNG";
 	private JFrame window;
-	private JButton saveButton;
 	private ImagePanel imagePanel;
 	private JFileChooser fileChooser;
 	private File selectedFile;
@@ -22,7 +22,6 @@ public class BinaryImageDisplay {
 		window.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		window.setVisible(true);
 		
-		saveButton = new JButton("Save");
 		imagePanel = new ImagePanel();
 		fileChooser = new JFileChooser(System.getProperty("user.dir"));	
 		sorter = new ImageSorter();
@@ -57,7 +56,15 @@ public class BinaryImageDisplay {
 			}
 		});
 		menu.add(mntmSaveImage);	
-		//System.out.println(System.getProperty("os.name"));
+		
+		JMenuItem mntmQuit = new JMenuItem("Quit");
+		mntmQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, modifierKey));
+		mntmQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		menu.add(mntmQuit);
 	}
 	
 	private void selectFile() {
@@ -83,7 +90,7 @@ public class BinaryImageDisplay {
 	    if (returnVal == JFileChooser.APPROVE_OPTION) {
 	    	outputfile = fileChooser.getSelectedFile();	
 			try {
-				ImageIO.write(currentDisplay, "PNG", outputfile);
+				ImageIO.write(currentDisplay, IMAGE_FORMAT, outputfile);
 			} catch (IOException io) {
 				
 			}
