@@ -33,8 +33,14 @@ public class BinaryImageDisplay {
 		JMenu menu = new JMenu("Menu");
 		menuBar.add(menu);
 		
+		int modifierKey;
+		if (System.getProperty("os.name").equals("Mac OS X"))
+			modifierKey = ActionEvent.META_MASK;
+		else 
+			modifierKey = ActionEvent.CTRL_MASK;
+		
 		JMenuItem mntmChooseSourceData = new JMenuItem("Choose source data");
-		mntmChooseSourceData.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.META_MASK));
+		mntmChooseSourceData.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, modifierKey));
 		mntmChooseSourceData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectFile();
@@ -44,19 +50,21 @@ public class BinaryImageDisplay {
 		menu.add(mntmChooseSourceData);
 		
 		JMenuItem mntmSaveImage = new JMenuItem("Save image");
-		mntmSaveImage.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.META_MASK));
+		mntmSaveImage.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, modifierKey));
 		mntmSaveImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				saveImage();
 			}
 		});
-		menu.add(mntmSaveImage);		
+		menu.add(mntmSaveImage);	
+		//System.out.println(System.getProperty("os.name"));
 	}
 	
 	private void selectFile() {
 		JFrame dialogWindow = new JFrame("Choose an image file");
 		fileChooser.showOpenDialog(dialogWindow);
-		selectedFile = fileChooser.getSelectedFile();
+		if (fileChooser.getSelectedFile() != null)
+			selectedFile = fileChooser.getSelectedFile();
 	}
 	
 	private void displayImage() {
