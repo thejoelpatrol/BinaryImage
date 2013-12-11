@@ -4,6 +4,7 @@ import java.io.*;
 import javax.imageio.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 public class BinaryImageDisplay {	
 	private static final int DEFAULT_WIDTH = 640;
@@ -33,6 +34,7 @@ public class BinaryImageDisplay {
 		menuBar.add(menu);
 		
 		JMenuItem mntmChooseSourceData = new JMenuItem("Choose source data");
+		mntmChooseSourceData.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.META_MASK));
 		mntmChooseSourceData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectFile();
@@ -42,6 +44,12 @@ public class BinaryImageDisplay {
 		menu.add(mntmChooseSourceData);
 		
 		JMenuItem mntmSaveImage = new JMenuItem("Save image");
+		mntmSaveImage.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.META_MASK));
+		mntmSaveImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				saveImage();
+			}
+		});
 		menu.add(mntmSaveImage);		
 	}
 	
@@ -56,7 +64,6 @@ public class BinaryImageDisplay {
 		imagePanel.setPixelData(rawData.getPixelArray());
 		window.getContentPane().add(imagePanel);
 		window.validate();
-		//saveImage(); // make a button to do this, rather than automatic
 	}
 	
 	private void saveImage() {
