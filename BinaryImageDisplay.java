@@ -43,7 +43,6 @@ public class BinaryImageDisplay {
 		mntmChooseSourceData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectFile();
-				displayImage();
 			}
 		});
 		menu.add(mntmChooseSourceData);
@@ -65,19 +64,23 @@ public class BinaryImageDisplay {
 			}
 		});
 		menu.add(mntmQuit);
+		
+		window.validate();
+		window.getContentPane().add(imagePanel);
 	}
 	
 	private void selectFile() {
 		JFrame dialogWindow = new JFrame("Choose an image file");
 		fileChooser.showOpenDialog(dialogWindow);
-		if (fileChooser.getSelectedFile() != null)
+		if (fileChooser.getSelectedFile() != null) {
 			selectedFile = fileChooser.getSelectedFile();
+			displayImage();
+		}
 	}
 	
 	private void displayImage() {
 		ImageInterpreter rawData = new ImageInterpreter(selectedFile);
 		imagePanel.setPixelData(rawData.getPixelArray());
-		window.getContentPane().add(imagePanel);
 		window.validate();
 	}
 	
@@ -103,6 +106,5 @@ public class BinaryImageDisplay {
 	public static void main(String[] args) {
 		BinaryImageDisplay display = new BinaryImageDisplay();
 		display.selectFile();
-		display.displayImage();
 	}
 }
