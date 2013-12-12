@@ -13,7 +13,6 @@ public class BinaryImageDisplay {
 	private static final String IMAGE_FORMAT = "PNG";
 	private JFrame window;
 	private ImagePanel imagePanel;
-	//private JFileChooser fileChooser;
 	private FileDialog fileChooser;
 	private FileDialog fileSaver;
 	private File selectedFile;
@@ -26,12 +25,12 @@ public class BinaryImageDisplay {
 		window.setVisible(true);
 		
 		imagePanel = new ImagePanel();
-		//fileChooser = new JFileChooser(System.getProperty("user.dir"));	
 		sorter = new ImageSorter();
 		
 		fileChooser = new FileDialog(window, "Choose source data", FileDialog.LOAD);
 		fileChooser.setDirectory(System.getProperty("user.dir"));
 		fileSaver = new FileDialog(window, "Save image", FileDialog.SAVE);
+		fileSaver.setDirectory(System.getProperty("user.dir"));
 
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -78,10 +77,7 @@ public class BinaryImageDisplay {
 	}
 	
 	private void selectFile() {
-		//JFrame dialogWindow = new JFrame("Choose an image file");
 		fileChooser.setVisible(true);
-		//fileChooser.showOpenDialog(dialogWindow);
-		//if (fileChooser.getSelectedFile() != null) {
 		String filename = fileChooser.getDirectory() + fileChooser.getFile();
 		if (filename != null) {
 			selectedFile = new File(filename);
@@ -97,8 +93,6 @@ public class BinaryImageDisplay {
 	
 	private void saveImage() {
 		BufferedImage currentDisplay = imagePanel.getImage();
-		//File outputfile;	
-		//JFrame dialogWindow = new JFrame("Save image");
 		fileSaver.setVisible(true);
 		String filename = fileSaver.getDirectory() + fileSaver.getFile();
 		if (filename != null) {
@@ -108,15 +102,6 @@ public class BinaryImageDisplay {
 				
 			}
 		}
-		/*int returnVal = fileChooser.showSaveDialog(dialogWindow);
-	    if (returnVal == JFileChooser.APPROVE_OPTION) {
-	    	outputfile = fileChooser.getSelectedFile();	
-			try {
-				ImageIO.write(currentDisplay, IMAGE_FORMAT, outputfile);
-			} catch (IOException io) {
-				
-			}
-	    }*/
 	}
 	
 	/**
