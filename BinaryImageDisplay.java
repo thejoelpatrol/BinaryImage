@@ -5,6 +5,7 @@ import javax.imageio.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.FileDialog;
 
 public class BinaryImageDisplay {	
 	private static final int DEFAULT_WIDTH = 640;
@@ -12,7 +13,9 @@ public class BinaryImageDisplay {
 	private static final String IMAGE_FORMAT = "PNG";
 	private JFrame window;
 	private ImagePanel imagePanel;
-	private JFileChooser fileChooser;
+	//private JFileChooser fileChooser;
+	private FileDialog fileChooser;
+	private FileDialog fileSaver;
 	private File selectedFile;
 	ImageSorter sorter;
 		
@@ -23,8 +26,13 @@ public class BinaryImageDisplay {
 		window.setVisible(true);
 		
 		imagePanel = new ImagePanel();
-		fileChooser = new JFileChooser(System.getProperty("user.dir"));	
+		//fileChooser = new JFileChooser(System.getProperty("user.dir"));	
 		sorter = new ImageSorter();
+		
+		fileChooser = new FileDialog(window, "Choose source data", FileDialog.LOAD);
+		fileChooser.setDirectory(System.getProperty("user.dir"));
+		fileSaver = new FileDialog(window, "Save image", FileDialog.SAVE);
+
 		
 		JMenuBar menuBar = new JMenuBar();
 		window.setJMenuBar(menuBar);
@@ -71,9 +79,12 @@ public class BinaryImageDisplay {
 	
 	private void selectFile() {
 		JFrame dialogWindow = new JFrame("Choose an image file");
-		fileChooser.showOpenDialog(dialogWindow);
-		if (fileChooser.getSelectedFile() != null) {
-			selectedFile = fileChooser.getSelectedFile();
+		fileChooser.setVisible(true);
+		//fileChooser.showOpenDialog(dialogWindow);
+		//if (fileChooser.getSelectedFile() != null) {
+		String filename = fileChooser.getFile();
+		if (filename != null) {
+			selectedFile = new File(fileChooser.getDirectory() + fileChooser.getFile());
 			displayImage();
 		}
 	}
@@ -89,7 +100,7 @@ public class BinaryImageDisplay {
 		File outputfile;	
 		JFrame dialogWindow = new JFrame("Save image");
 		
-		int returnVal = fileChooser.showSaveDialog(dialogWindow);
+		/*int returnVal = fileChooser.showSaveDialog(dialogWindow);
 	    if (returnVal == JFileChooser.APPROVE_OPTION) {
 	    	outputfile = fileChooser.getSelectedFile();	
 			try {
@@ -97,7 +108,7 @@ public class BinaryImageDisplay {
 			} catch (IOException io) {
 				
 			}
-	    }
+	    }*/
 	}
 	
 	/**
