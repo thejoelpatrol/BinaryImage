@@ -78,13 +78,13 @@ public class BinaryImageDisplay {
 	}
 	
 	private void selectFile() {
-		JFrame dialogWindow = new JFrame("Choose an image file");
+		//JFrame dialogWindow = new JFrame("Choose an image file");
 		fileChooser.setVisible(true);
 		//fileChooser.showOpenDialog(dialogWindow);
 		//if (fileChooser.getSelectedFile() != null) {
-		String filename = fileChooser.getFile();
+		String filename = fileChooser.getDirectory() + fileChooser.getFile();
 		if (filename != null) {
-			selectedFile = new File(fileChooser.getDirectory() + fileChooser.getFile());
+			selectedFile = new File(filename);
 			displayImage();
 		}
 	}
@@ -97,9 +97,17 @@ public class BinaryImageDisplay {
 	
 	private void saveImage() {
 		BufferedImage currentDisplay = imagePanel.getImage();
-		File outputfile;	
-		JFrame dialogWindow = new JFrame("Save image");
-		
+		//File outputfile;	
+		//JFrame dialogWindow = new JFrame("Save image");
+		fileSaver.setVisible(true);
+		String filename = fileSaver.getDirectory() + fileSaver.getFile();
+		if (filename != null) {
+			try {
+				ImageIO.write(currentDisplay, IMAGE_FORMAT, new File(filename));
+			} catch (IOException io) {
+				
+			}
+		}
 		/*int returnVal = fileChooser.showSaveDialog(dialogWindow);
 	    if (returnVal == JFileChooser.APPROVE_OPTION) {
 	    	outputfile = fileChooser.getSelectedFile();	
